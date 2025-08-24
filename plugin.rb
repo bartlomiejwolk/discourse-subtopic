@@ -35,7 +35,7 @@ after_initialize do
       ActiveRecord::Base.transaction do
         # Create new topic in same category as original
         subtopic = Topic.create!(
-          title: title,
+          title: ":yarn: #{title}",
           user: acting_user,
           category_id: original_topic.category_id,
           archetype: Archetype.default

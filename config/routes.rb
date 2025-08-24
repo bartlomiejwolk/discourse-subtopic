@@ -5,5 +5,5 @@ DiscourseSubtopic::Engine.routes.draw do
 end
 
 Discourse::Application.routes.append do
-  mount ::DiscourseSubtopic::Engine, at: "/discourse-subtopic"
+  mount ::DiscourseSubtopic::Engine, at: "/discourse-subtopic", as: :subtopic_engine
 end

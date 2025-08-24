@@ -1,10 +1,8 @@
 en:
   discourse_subtopic:
     first_post_content: |
-      # Discussion continues from: [%{original_topic_title}](%{original_topic_url})
-      
-      This subtopic was created to continue the discussion from the original topic. Please refer to the parent topic for additional context.
+      # [%{original_topic_title}](%{original_topic_url})
     link_post_content: |
-      # Related Subtopic: [%{subtopic_title}](%{subtopic_url})
+      # [%{subtopic_title}](%{subtopic_url})
       
       A new subtopic has been created to continue this discussion in a more focused manner.
