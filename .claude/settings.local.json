@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//root/src/discourse/plugins/discourse-toc/**)",
+      "Read(//root/src/discourse/**)",
+      "Read(//root/src/discourse/**)",
+      "Bash(docker exec:*)",
+      "Bash(docker restart:*)"
+    ],
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [
+      "/root/src/discourse"
+    ]
+  }
+}

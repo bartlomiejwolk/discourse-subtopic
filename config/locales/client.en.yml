@@ -1,0 +1,11 @@
+en:
+  js:
+    discourse_subtopic:
+      create_subtopic:
+        title: "Subtopic"
+        help: "Create a new related topic"
+        modal_title: "Create Subtopic"
+        title_label: "Subtopic Title"
+        title_placeholder: "Enter a title for the new subtopic..."
+        create_button: "Create Subtopic"
+        info: "This will create a new topic related to '%{topic_title}' and add a link back to this discussion."
