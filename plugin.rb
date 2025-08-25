@@ -17,11 +17,19 @@ end
 require_relative "lib/discourse_subtopic/engine.rb"
 
 after_initialize do
+  Rails.logger.info "🧶 DISCOURSE SUBTOPIC: Plugin initializing..."
+  Rails.logger.info "🧶 DISCOURSE SUBTOPIC: hide_subtopics setting = #{SiteSetting.discourse_subtopic_hide_subtopics}"
   
   # Add site settings to serializer
   if respond_to?(:add_to_serializer)
     add_to_serializer(:site, :discourse_subtopic_enabled) do
+      Rails.logger.info "🧶 SUBTOPIC: Serializing discourse_subtopic_enabled = #{SiteSetting.discourse_subtopic_enabled}"
       SiteSetting.discourse_subtopic_enabled
+    end
+
+    add_to_serializer(:site, :discourse_subtopic_hide_subtopics) do
+      Rails.logger.info "🧶 SUBTOPIC: Serializing discourse_subtopic_hide_subtopics = #{SiteSetting.discourse_subtopic_hide_subtopics}"
+      SiteSetting.discourse_subtopic_hide_subtopics
     end
     
     # Add can_create_subtopic to topic detail serializer
@@ -29,6 +37,35 @@ after_initialize do
       scope.can_create_subtopic?(object.topic)
     end
   end
+
+  # Add yarn topic filtering - SIMPLE AND CORRECT APPROACH
+  TopicQuery.public_valid_options << :show_yarn_topics
+  TopicQuery.valid_options << :show_yarn_topics
+
+  TopicQuery.add_custom_filter(:show_yarn_topics) do |results, topic_query|
+    # Only apply filtering if the hide subtopics setting is enabled
+    if SiteSetting.discourse_subtopic_hide_subtopics
+      show_yarn = topic_query.options[:show_yarn_topics]
+      
+      if show_yarn == "true"
+        # Show only yarn topics when explicitly requested
+        Rails.logger.info "🧶 FILTERING: Showing only yarn topics"
+        results = results.where("topics.title LIKE '%:yarn:%'")
+      elsif show_yarn == "false"
+        # Show all topics when explicitly requested
+        Rails.logger.info "🧶 FILTERING: Showing all topics (explicit)"
+        results = results
+      else
+        # Default behavior: hide yarn topics
+        Rails.logger.info "🧶 FILTERING: Hiding yarn topics (default)"
+        results = results.where("topics.title NOT LIKE '%:yarn:%'")
+      end
+    end
+    
+    results
+  end
+  
+  Rails.logger.info "🧶 DISCOURSE SUBTOPIC: Plugin initialization complete - FILTERING ACTIVE"
 
   module ::DiscourseSubtopic
     def self.create_subtopic!(original_topic, title, acting_user)

@@ -2,3 +2,7 @@ plugins:
   discourse_subtopic_enabled:
     default: true
     client: true
+  discourse_subtopic_hide_subtopics:
+    default: true
+    client: true
+    description: "Hide subtopics (topics containing ':yarn:' in their title) from topic lists by default"

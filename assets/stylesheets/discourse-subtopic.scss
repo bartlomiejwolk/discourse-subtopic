@@ -39,3 +39,49 @@
     color: var(--secondary);
   }
 }
+
+// Yarn topic navigation item styles
+.nav-item.yarn-topics {
+  a {
+    color: var(--primary);
+    
+    &:hover {
+      color: var(--primary-high);
+    }
+    
+    &.active {
+      color: var(--tertiary);
+      font-weight: 500;
+      
+      &::before {
+        animation: yarn-bounce 0.6s ease-in-out;
+      }
+    }
+  }
+}
+
+@keyframes yarn-bounce {
+  0%, 20%, 60%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-2px);
+  }
+  80% {
+    transform: translateY(-1px);
+  }
+}
+
+// Hide yarn topics with subtle styling when they appear
+.topic-list-item[data-topic-title*=":yarn:"] {
+  opacity: 0.7;
+  
+  &:hover {
+    opacity: 0.9;
+  }
+  
+  .topic-title a:before {
+    content: "🧶 ";
+    font-size: 0.9em;
+  }
+}
